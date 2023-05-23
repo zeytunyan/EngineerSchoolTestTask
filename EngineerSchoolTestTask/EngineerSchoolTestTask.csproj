@@ -15,4 +15,8 @@
     <PackageReference Include="System.Collections.Specialized" Version="4.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FrequencyDictionary\FrequencyDictionaryLib.csproj" />
+  </ItemGroup>
+
 </Project>
