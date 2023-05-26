@@ -116,11 +116,22 @@ namespace FrequencyDictionaryLib
             }
         }
 
-        private Dictionary<string , int> MakeWordFrequencyDictionaryFromText(string text)
+
+        private Dictionary<string , int> MakeWordFrequencyDictionaryFromTextLinq(string text)
         {
             var wordRegex = new Regex("\\p{L}+([-‐‑‒–−—'’]?\\p{L}+)*");
 
             return wordRegex.Matches(text)
+                .GroupBy(match => match.ToString().ToLower(), (word, matches) => new WordFrequency(word, matches.Count()))
+                .OrderByDescending(wordFrequency => wordFrequency.Frequency).ThenBy(wordFrequency => wordFrequency.Word)
+                .ToDictionary(wordFrequency => wordFrequency.Word, wordFrequency => wordFrequency.Frequency);
+        }
+
+        public Dictionary<string, int> MakeWordFrequencyDictionaryFromTextParallelLinq(string text)
+        {
+            var wordRegex = new Regex("\\p{L}+([-‐‑‒–−—'’]?\\p{L}+)*");
+
+            return wordRegex.Matches(text).AsParallel()
                 .GroupBy(match => match.ToString().ToLower(), (word, matches) => new WordFrequency(word, matches.Count()))
                 .OrderByDescending(wordFrequency => wordFrequency.Frequency).ThenBy(wordFrequency => wordFrequency.Word)
                 .ToDictionary(wordFrequency => wordFrequency.Word, wordFrequency => wordFrequency.Frequency);
