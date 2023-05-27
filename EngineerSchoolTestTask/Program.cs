@@ -11,7 +11,7 @@ var interactor = new ConsoleInteractor
     ActionDoneMessage = "The frequency dictionary was created"
 };
 
-interactor.ContinuousInteraction(path =>
+await interactor.ContinuousInteraction(async path =>
 {
     var fileText = File.ReadAllText(path ?? "");
     var frequencyDictionaryObj = new FrequencyDictionary();

@@ -17,7 +17,7 @@
             HowToAgreeInstructions = $"Please, type {AgreementKey} to agree, or anything else to exit";
         }
 
-        public void ContinuousInteraction(Action<string?>? interactionAction)
+        public async Task ContinuousInteraction(Func<string?, Task>? interactionAction)
         {
             SayHello();
 
@@ -28,7 +28,7 @@
 
                 try
                 {
-                    interactionAction?.Invoke(value);
+                    await interactionAction?.Invoke(value);
                 }
                 catch (Exception ex)
                 {
